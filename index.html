@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Proposal</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lottie Web Player CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Stage 1 -->
+        <div id="proposal-1" class="proposal-screen active">
+            <div id="lottie-1" class="lottie-box"></div>
+            <h1>Hey Love! 💖</h1>
+            <p>I love you more than anything. Will you be mine forever?</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="showProposal('yes')">💕 Yes</button>
+                <button class="btn btn-no" onclick="nextStage(2)">💔 No</button>
+            </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div id="proposal-2" class="proposal-screen">
+            <div id="lottie-2" class="lottie-box"></div>
+            <h1>Are you sure? 🥺</h1>
+            <p>You mean everything to me. Please say yes!</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="showProposal('yes')">💕 Yes</button>
+                <button class="btn btn-no" onclick="nextStage(3)">💔 No</button>
+            </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div id="proposal-3" class="proposal-screen">
+            <div id="lottie-3" class="lottie-box"></div>
+            <h1>My heart is breaking... 💔</h1>
+            <p>I can't imagine my life without you. Please give us a chance!</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="showProposal('yes')">💕 Yes</button>
+                <button class="btn btn-no" onclick="nextStage(4)">💔 No</button>
+            </div>
+        </div>
+
+        <!-- Stage 4 (Evasive Button) -->
+        <div id="proposal-4" class="proposal-screen">
+            <div id="lottie-4" class="lottie-box"></div>
+            <h1>Don't leave me... 😭</h1>
+            <p>You're my everything. Please say yes and make me the happiest person!</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="showProposal('yes')">💕 Yes</button>
+                <button class="btn btn-no id="move-random" onmouseover="moveButton(this)" onclick="moveButton(this)">💔 No</button>
+            </div>
+        </div>
+
+        <!-- Success Stage -->
+        <div id="proposal-yes" class="proposal-screen">
+            <div id="lottie-yes" class="lottie-box"></div>
+            <h1>You said YES! 🤩</h1>
+            <p>I love you, my love. Let's make forever amazing! 🌹</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
