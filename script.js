@@ -1,52 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Lottie Animations
-    loadLottie('lottie-1', 'animations/pleading_face.json');
-    loadLottie('lottie-2', 'animations/sad_duck.json');
-    loadLottie('lottie-3', 'animations/crying_duck.json');
-    loadLottie('lottie-4', 'animations/crying_eater.json');
-    loadLottie('lottie-yes', 'animations/jumping_together.json');
+    // Helper function to load animations directly from public URLs
+    const loadLottie = (containerId, animationUrl) => {
+        return lottie.loadAnimation({
+            container: document.getElementById(containerId),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: animationUrl
+        });
+    };
+
+    // Public Lottie JSON URLs (replace these URLs with any specific Lottie URL you like)
+    loadLottie('lottie-1', 'https://assets5.lottiefiles.com/packages/lf20_j1adxtYb.json'); // Pleading emoji/character
+    loadLottie('lottie-2', 'https://assets5.lottiefiles.com/packages/lf20_k239cvyc.json'); // Sad character
+    loadLottie('lottie-3', 'https://assets5.lottiefiles.com/packages/lf20_1id2ylms.json'); // Crying character
+    loadLottie('lottie-4', 'https://assets5.lottiefiles.com/packages/lf20_1id2ylms.json'); // Crying character
+    loadLottie('lottie-yes', 'https://assets5.lottiefiles.com/packages/lf20_xl3ak324.json'); // Happy/Love character
+
+    // Runaway "No" Button behavior
+    const runawayBtn = document.getElementById('runaway-btn');
+    if (runawayBtn) {
+        const moveButton = () => {
+            const maxX = window.innerWidth - runawayBtn.offsetWidth - 40;
+            const maxY = window.innerHeight - runawayBtn.offsetHeight - 40;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            runawayBtn.style.position = 'fixed';
+            runawayBtn.style.left = `${randomX}px`;
+            runawayBtn.style.top = `${randomY}px`;
+        };
+
+        runawayBtn.addEventListener('mouseover', moveButton);
+        runawayBtn.addEventListener('touchstart', moveButton);
+    }
 });
 
-function loadLottie(containerId, path) {
-    lottie.loadAnimation({
-        container: document.getElementById(containerId),
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: path
-    });
-}
-
-function nextStage(stageNumber) {
+function nextScreen(screenId) {
     document.querySelectorAll('.proposal-screen').forEach(screen => {
         screen.classList.remove('active');
     });
-    document.getElementById(`proposal-${stageNumber}`).classList.add('active');
+    document.getElementById(screenId).classList.add('active');
 }
 
-function showProposal(type) {
-    if (type === 'yes') {
-        document.querySelectorAll('.proposal-screen').forEach(screen => {
-            screen.classList.remove('active');
-        });
-        document.getElementById('proposal-yes').classList.add('active');
-        
-        // Trigger celebratory confetti burst
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
-    }
+function showScreen(screenId) {
+    nextScreen(screenId);
 }
-
-// Moves the 'No' button randomly across the screen on Stage 4
-function moveButton(button) {
-    const x = Math.random() * (window.innerWidth - button.offsetWidth - 40);
-    const y = Math.random() * (window.innerHeight - button.offsetHeight - 40);
-    
-    button.style.position = 'fixed';
-    button.style.left = `${Math.max(20, x)}px`;
-    button.style.top = `${Math.max(20, y)}px`;
-}
-
