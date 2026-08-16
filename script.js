@@ -25,26 +25,15 @@ function showProposal(response) {
 
 function triggerConfetti() {
     if (typeof confetti === 'function') {
-        const count = 200;
-        const defaults = { origin: { y: 0.7 } };
-
-        function fire(particleRatio, opts) {
-            confetti({
-                ...defaults,
-                ...opts,
-                particleCount: Math.floor(count * particleRatio)
-            });
-        }
-
-        fire(0.25, { spread: 26, startVelocity: 55 });
-        fire(0.2, { spread: 60 });
-        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-        fire(0.1, { spread: 120, startVelocity: 45 });
+        confetti({
+            particleCount: 120,
+            spread: 80,
+            origin: { y: 0.6 }
+        });
     }
 }
 
-// Evasive "No" Button behavior across desktop & mobile
+// Fixed boundary calculations for mobile and desktop screens
 document.addEventListener('DOMContentLoaded', () => {
     const runawayBtn = document.getElementById('move-random');
 
@@ -52,10 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const moveButton = (e) => {
             if (e) e.preventDefault();
 
-            // Calculate boundary limits considering padding
             const padding = 20;
-            const maxX = window.innerWidth - runawayBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - runawayBtn.offsetHeight - padding;
+            const btnWidth = runawayBtn.offsetWidth || 100;
+            const btnHeight = runawayBtn.offsetHeight || 45;
+
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
 
             const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
             const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
