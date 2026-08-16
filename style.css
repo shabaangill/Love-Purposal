@@ -1,7 +1,6 @@
 :root {
     --primary: #ff3366;
     --primary-hover: #e02253;
-    --secondary-bg: #ffffff;
     --text-dark: #2d3748;
     --text-muted: #718096;
     --shadow-soft: 0 12px 32px rgba(255, 51, 102, 0.15);
@@ -25,7 +24,6 @@ body {
     padding: 20px;
 }
 
-/* Floating Decorative Elements */
 .bg-hearts span {
     position: absolute;
     display: block;
@@ -46,9 +44,8 @@ body {
     50% { transform: translateY(-25px) rotate(12deg); }
 }
 
-/* Glassmorphism Card Container */
 .container {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 2px solid rgba(255, 255, 255, 0.6);
@@ -70,13 +67,16 @@ body {
 
 .proposal-screen.active {
     display: flex;
-    animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: scaleIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .lottie-box {
-    width: 190px;
-    height: 190px;
+    width: 180px;
+    height: 180px;
     margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 dotlottie-player {
@@ -105,6 +105,8 @@ p {
     gap: 16px;
     justify-content: center;
     width: 100%;
+    position: relative;
+    min-height: 50px;
 }
 
 .btn {
@@ -115,7 +117,7 @@ p {
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease;
     outline: none;
 }
 
@@ -128,7 +130,6 @@ p {
 .btn-yes:hover {
     background-color: var(--primary-hover);
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 8px 22px rgba(255, 51, 102, 0.45);
 }
 
 .btn-no {
@@ -137,12 +138,8 @@ p {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.btn-no:hover {
-    background-color: #e2e8f0;
-}
-
 #move-random {
-    z-index: 99;
+    z-index: 999;
     transition: left 0.15s ease-out, top 0.15s ease-out;
 }
 
