@@ -1,31 +1,64 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Helper function to load animations directly from public URLs
-    const loadLottie = (containerId, animationUrl) => {
-        return lottie.loadAnimation({
-            container: document.getElementById(containerId),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: animationUrl
+function nextStage(stageNumber) {
+    document.querySelectorAll('.proposal-screen').forEach(screen => {
+        screen.classList.remove('active');
+    });
+
+    const targetStage = document.getElementById(`proposal-${stageNumber}`);
+    if (targetStage) {
+        targetStage.classList.add('active');
+    }
+}
+
+function showProposal(response) {
+    if (response === 'yes') {
+        document.querySelectorAll('.proposal-screen').forEach(screen => {
+            screen.classList.remove('active');
         });
-    };
 
-    // Public Lottie JSON URLs (replace these URLs with any specific Lottie URL you like)
-    loadLottie('lottie-1', 'https://assets5.lottiefiles.com/packages/lf20_j1adxtYb.json'); // Pleading emoji/character
-    loadLottie('lottie-2', 'https://assets5.lottiefiles.com/packages/lf20_k239cvyc.json'); // Sad character
-    loadLottie('lottie-3', 'https://assets5.lottiefiles.com/packages/lf20_1id2ylms.json'); // Crying character
-    loadLottie('lottie-4', 'https://assets5.lottiefiles.com/packages/lf20_1id2ylms.json'); // Crying character
-    loadLottie('lottie-yes', 'https://assets5.lottiefiles.com/packages/lf20_xl3ak324.json'); // Happy/Love character
+        const successStage = document.getElementById('proposal-yes');
+        if (successStage) {
+            successStage.classList.add('active');
+            triggerConfetti();
+        }
+    }
+}
 
-    // Runaway "No" Button behavior
-    const runawayBtn = document.getElementById('runaway-btn');
+function triggerConfetti() {
+    if (typeof confetti === 'function') {
+        const count = 200;
+        const defaults = { origin: { y: 0.7 } };
+
+        function fire(particleRatio, opts) {
+            confetti({
+                ...defaults,
+                ...opts,
+                particleCount: Math.floor(count * particleRatio)
+            });
+        }
+
+        fire(0.25, { spread: 26, startVelocity: 55 });
+        fire(0.2, { spread: 60 });
+        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+        fire(0.1, { spread: 120, startVelocity: 45 });
+    }
+}
+
+// Evasive "No" Button behavior across desktop & mobile
+document.addEventListener('DOMContentLoaded', () => {
+    const runawayBtn = document.getElementById('move-random');
+
     if (runawayBtn) {
-        const moveButton = () => {
-            const maxX = window.innerWidth - runawayBtn.offsetWidth - 40;
-            const maxY = window.innerHeight - runawayBtn.offsetHeight - 40;
-            
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+        const moveButton = (e) => {
+            if (e) e.preventDefault();
+
+            // Calculate boundary limits considering padding
+            const padding = 20;
+            const maxX = window.innerWidth - runawayBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - runawayBtn.offsetHeight - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
 
             runawayBtn.style.position = 'fixed';
             runawayBtn.style.left = `${randomX}px`;
@@ -33,17 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         runawayBtn.addEventListener('mouseover', moveButton);
-        runawayBtn.addEventListener('touchstart', moveButton);
+        runawayBtn.addEventListener('touchstart', moveButton, { passive: false });
+        runawayBtn.addEventListener('click', moveButton);
     }
 });
-
-function nextScreen(screenId) {
-    document.querySelectorAll('.proposal-screen').forEach(screen => {
-        screen.classList.remove('active');
-    });
-    document.getElementById(screenId).classList.add('active');
-}
-
-function showScreen(screenId) {
-    nextScreen(screenId);
-}
